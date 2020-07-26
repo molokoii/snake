@@ -19,15 +19,19 @@ def main(stdscr):
 
     # Initialization of the snake and item positions
     snake = [(3, 5), (3, 4), (3, 3)]
-    item = (10, 10)
+    item = (10, 25)
 
     win.addch(item[0], item[1], "#")
+
+    score = 0
 
     KEY_ESC = 27
     key = curses.KEY_RIGHT
 
     # Esc key to stop
     while key != KEY_ESC:
+        win.addstr(0, 1, ' Score: ' + str(score) + ' ')
+
         prev_key = key
         event = win.getch()
         key = event if event != -1 else prev_key
@@ -70,6 +74,7 @@ def main(stdscr):
 
         # When snake eat the item
         if snake[0] == item:
+            score += 1
             item = ()
             while item == ():
                 # compute new item position
@@ -82,6 +87,6 @@ def main(stdscr):
             win.addch(tail[0], tail[1], " ")
 
         win.addch(snake[0][0], snake[0][1], 'O')
-
+    print("Score: " + str(score))
 
 curses.wrapper(main)
